@@ -12,28 +12,28 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 echo 'Installing Node.js dependencies...'
-                bat 'npm install'
+                sh 'npm install'
             }
         }
 
         stage('Run Tests') {
             steps {
                 echo 'Running tests...'
-                bat 'npm test || echo "No tests to run"'
+                sh 'npm test || echo "No tests to run"'
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker image...'
-                bat 'docker build -t lab5-node-app .'
+                sh 'docker build -t lab5-node-app .'
             }
         }
 
         stage('Run Docker Container') {
             steps {
                 echo 'Running Docker container...'
-                bat 'docker run -d -p 3000:3000 --name lab5-container lab5-node-app'
+                sh 'docker run -d -p 3000:3000 --name lab5-container lab5-node-app || echo "Container may already be running"'
             }
         }
     }
